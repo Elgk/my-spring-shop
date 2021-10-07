@@ -14,9 +14,11 @@ public class Product {
     private String name;
     private BigDecimal price;
     private int count;
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Person createdBy;
+
     private String vendorCode;
     private LocalDateTime createdAt;
 
@@ -25,12 +27,8 @@ public class Product {
         if(this.id == null) {
             this.id = UUID.randomUUID();
         }
-
         this.createdAt = LocalDateTime.now();
     }
-
-
-
     public UUID getId() {
         return id;
     }
@@ -92,5 +90,12 @@ public class Product {
     public Product setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
+    }
+    public void increaseCount(){
+        this.count ++;
+    }
+
+    public void decreaseCount(){
+        this.count --;
     }
 }
