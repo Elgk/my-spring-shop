@@ -4,10 +4,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +20,7 @@ public class Cart {
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name="person_id")
     private Person person;
 
     @Type(type = "jsonb")

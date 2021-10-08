@@ -1,6 +1,5 @@
 package ru.geekbrains.myspringshop.frontend;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,8 +10,14 @@ import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
+import ru.geekbrains.myspringshop.entity.Cart;
 import ru.geekbrains.myspringshop.entity.Product;
+import ru.geekbrains.myspringshop.service.CartService;
 import ru.geekbrains.myspringshop.service.ProductService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Route("main")
 public class MainView extends VerticalLayout {
@@ -20,10 +25,12 @@ public class MainView extends VerticalLayout {
 
     private final ProductService productService;
 
-    public MainView(ProductService productService) {
-        this.productService = productService;
-        initPage();
+    private final CartService cartService;
 
+    public MainView(ProductService productService, CartService cartService) {
+        this.productService = productService;
+        this.cartService = cartService;
+        initPage();
     }
 
     private void initPage(){
@@ -53,6 +60,7 @@ public class MainView extends VerticalLayout {
                 item.decreaseCount();
                 productService.save(item);
                 productGrid.getDataProvider().refreshItem(item);
+
             });
             return new HorizontalLayout(plusButton, minusButton);
         }));
@@ -61,7 +69,20 @@ public class MainView extends VerticalLayout {
 
     private HorizontalLayout initCartButton(){
         var addToCartButton = new Button("Добавить в корзину", event -> {
-       //     productGrid.getSelectedItems()
+            var cart = new Cart();
+            List<Cart.InnerProduct> products = new ArrayList<>();
+            Set<Product> gridSelectedItems = productGrid.getSelectedItems();
+            for (Product product : gridSelectedItems) {
+                Cart.InnerProduct innerProduct = new Cart.InnerProduct();
+                innerProduct.setName(product.getName());
+                innerProduct.setCount(product.getCount());
+                innerProduct.setPrice(product.getPrice());
+                innerProduct.setVendorCode(product.getVendorCode());
+                products.add(innerProduct);
+            }
+            cart.setProducts(products);
+            cart.setPerson(cartService.findPerson());
+            cartService.save(cart);
             Notification.show("Товар успешно добавлен в корзину");
         });
 

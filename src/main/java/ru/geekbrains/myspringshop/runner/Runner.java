@@ -53,13 +53,16 @@ public class Runner implements CommandLineRunner {
         cart.setPerson(person);
         cartRepository.save(cart);
         System.out.println(cart.getProducts());
-*/
+
         Product product = new Product();
-        product.setCreatedBy(personRepository.findById(UUID.fromString("14983a99-cc7a-4e49-a670-7d4145a7b38d")).get());
+        product.setCreatedBy(personRepository.findFirstById());
+     //   product.setCreatedBy(personRepository.findById(UUID.fromString("14983a99-cc7a-4e49-a670-7d4145a7b38d")).get());
         product.setCount(1);
-        product.setPrice(BigDecimal.valueOf(700));
-        product.setName("cheese");
-        product.setVendorCode("1234");
+        product.setPrice(BigDecimal.valueOf(35));
+        product.setName("bread");
+        product.setVendorCode("11");
         productRepository.save(product);
+
+*/
     }
 }
