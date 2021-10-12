@@ -1,6 +1,7 @@
 package ru.geekbrains.myspringshop.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.myspringshop.aspect.Statistic;
 import ru.geekbrains.myspringshop.entity.Cart;
 import ru.geekbrains.myspringshop.entity.Person;
 import ru.geekbrains.myspringshop.entity.repository.CartRepository;
@@ -27,6 +28,7 @@ public class CartService {
         return personRepository.findById(UUID.fromString(PERSON_ID)).get();
     }
 
+    @Statistic
     public Cart save(Cart cart){
         return cartRepository.save(cart);
     }

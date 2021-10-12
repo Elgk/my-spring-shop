@@ -1,6 +1,7 @@
 package ru.geekbrains.myspringshop.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.myspringshop.aspect.Statistic;
 import ru.geekbrains.myspringshop.entity.Product;
 import ru.geekbrains.myspringshop.entity.repository.ProductRepository;
 
@@ -18,6 +19,8 @@ public class ProductService {
     public List<Product> findAll(){
         return productRepository.findAll();
     }
+
+    @Statistic
     public Product save(Product product){
        return productRepository.save(product);
     }
