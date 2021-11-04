@@ -16,6 +16,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Statistic
     public List<Product> findAll(){
         return productRepository.findAll();
     }
