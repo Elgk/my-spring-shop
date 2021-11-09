@@ -10,6 +10,9 @@ public class Person {
     @Id
     private UUID id;
 
+    @Column(name = "login", length = 128, unique = true)
+    private String login;
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -19,22 +22,25 @@ public class Person {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "address")
+    @Column(name = "address", length = 1024)
     private String address;
 
     @Column(name = "balance")
     private String balance;
 
-    @Column(name = "role")
+    @Column(name = "role", length = 16)
     private String role;
 
-    @Column(name = "email")
+    @Column(name = "patronymic", length = 128)
+    private String  patronymic;
+
+    @Column(name = "email", length = 256)
     private String email;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 128)
     private String password;
 
     @PrePersist
@@ -134,5 +140,23 @@ public class Person {
     public Person setEmail(String email) {
         this.email = email;
         return  this;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public Person setLogin(String login) {
+        this.login = login;
+        return this;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public Person setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+        return this;
     }
 }
