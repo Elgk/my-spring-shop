@@ -6,6 +6,7 @@ import ru.geekbrains.myspringshop.entity.Product;
 import ru.geekbrains.myspringshop.entity.repository.ProductRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -25,4 +26,9 @@ public class ProductService {
     public Product save(Product product){
        return productRepository.save(product);
     }
+
+    public Product getProductById(UUID id) {
+        return productRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
 }

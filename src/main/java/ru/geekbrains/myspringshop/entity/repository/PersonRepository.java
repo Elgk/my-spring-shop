@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface PersonRepository extends CrudRepository<Person, UUID> {
 
     Optional<Person> findByLogin(String login);
+    Optional<Person> findByKeycloakId(UUID keycloakId);
 }

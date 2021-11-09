@@ -43,6 +43,9 @@ public class Person {
     @Column(name = "password", length = 128)
     private String password;
 
+    @Column
+    private UUID keycloakId;
+
     @PrePersist
     public void init() {
         if(this.id == null) {
@@ -158,5 +161,13 @@ public class Person {
     public Person setPatronymic(String patronymic) {
         this.patronymic = patronymic;
         return this;
+    }
+
+    public UUID getKeycloakId() {
+        return keycloakId;
+    }
+
+    public void setKeycloakId(UUID keycloakId) {
+        this.keycloakId = keycloakId;
     }
 }

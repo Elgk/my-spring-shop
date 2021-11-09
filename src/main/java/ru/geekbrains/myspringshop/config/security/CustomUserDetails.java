@@ -4,7 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.geekbrains.myspringshop.entity.Person;
+import ru.geekbrains.myspringshop.util.DecodeJwtToken;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,7 +42,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        int exp = (int) DecodeJwtToken.decode("exp");
+        long now = Instant.now().toEpochMilli() / 1000;
+
+        return exp > now;
     }
 
     @Override
