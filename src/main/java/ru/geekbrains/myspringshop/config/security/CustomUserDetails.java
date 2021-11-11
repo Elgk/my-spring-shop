@@ -17,7 +17,8 @@ public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails(Person person){
         this.person = person;
-        this.authorities = List.of(new SimpleGrantedAuthority(person.getRole()));
+      //  this.authorities = List.of(new SimpleGrantedAuthority(person.getRole()));
+        this.authorities = DecodeJwtToken.getRoles();
     }
     // определяется как находить пароль и др детали пользователя (на данный момент пользователь уже найден, т.е. идентифицировался)
     @Override
@@ -42,7 +43,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        int exp = (int) DecodeJwtToken.decode("exp");
+        int exp = (int) DecodeJwtToken.decodeByKey("exp");
         long now = Instant.now().toEpochMilli() / 1000;
 
         return exp > now;
@@ -56,5 +57,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Person getPerson() {
+        return person;
     }
 }

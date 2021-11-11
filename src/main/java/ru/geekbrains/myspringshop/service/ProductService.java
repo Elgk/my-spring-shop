@@ -3,6 +3,7 @@ package ru.geekbrains.myspringshop.service;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.myspringshop.aspect.Statistic;
 import ru.geekbrains.myspringshop.entity.Product;
+import ru.geekbrains.myspringshop.entity.filter.ProductFilter;
 import ru.geekbrains.myspringshop.entity.repository.ProductRepository;
 
 import java.util.List;
@@ -31,4 +32,7 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    public List<Product> findAllByFilter(ProductFilter filter){
+       return productRepository.findAll(filter.getSpecification());
+    }
 }

@@ -1,5 +1,8 @@
 package ru.geekbrains.myspringshop.entity;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import ru.geekbrains.myspringshop.config.security.CustomUserDetails;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,6 +31,7 @@ public class Product {
             this.id = UUID.randomUUID();
         }
         this.createdAt = LocalDateTime.now();
+        this.createdBy = ((CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getDetails()).getPerson();
     }
     public UUID getId() {
         return id;

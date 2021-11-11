@@ -9,7 +9,7 @@ import ru.geekbrains.myspringshop.entity.Cart;
 import ru.geekbrains.myspringshop.service.CartService;
 
 @Route("cart")
-public class CartView extends VerticalLayout {
+public class CartView extends  AbstractView{
     private final Grid<Cart.InnerProduct> cartGrid = new Grid<>(Cart.InnerProduct.class);
 
     private final CartService cartService;

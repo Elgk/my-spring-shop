@@ -15,7 +15,7 @@ import ru.geekbrains.myspringshop.service.PersonService;
 
 @Route("registration")
 @PageTitle("Registration | Vaadin Shop")
-public class RegistrationView extends VerticalLayout {
+public class RegistrationView extends AbstractView {
 
     private PersonService personService;
 
@@ -26,8 +26,8 @@ public class RegistrationView extends VerticalLayout {
 
     private void initRegistrationView() {
         setSizeFull();
-        setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
+//        setAlignItems(Alignment.CENTER);
+//        setJustifyContentMode(JustifyContentMode.CENTER);
 
         var loginTextField = initTextFieldWithPlaceholder("Логин");
       //  var passwordTextField = new PasswordField();
@@ -101,9 +101,5 @@ public class RegistrationView extends VerticalLayout {
             emailTextField, addressTextField, phoneTextField, registrationButton);
     }
 
-    private TextField initTextFieldWithPlaceholder(String placeString){
-        var textField = new TextField();
-        textField.setPlaceholder(placeString);
-        return  textField;
-    }
+
 }
