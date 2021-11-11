@@ -19,6 +19,7 @@ public abstract class AbstractView extends VerticalLayout {
     private final Button mainPageButton;
     private final Button addProductPageButton;
     private final Button cartButton;
+    private final Button orderButton;
 
     private static final SimpleGrantedAuthority ADMIN_ROLE = new SimpleGrantedAuthority("admin");
     private static final SimpleGrantedAuthority MANAGER_ROLE = new SimpleGrantedAuthority("seller");
@@ -40,7 +41,12 @@ public abstract class AbstractView extends VerticalLayout {
             UI.getCurrent().navigate("cart");
         });
 
+        orderButton = new Button("My orders", e ->{
+            UI.getCurrent().navigate("my-orders");
+        });
+
         cartButton.setVisible(false);
+        orderButton.setVisible(false);
 
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -77,6 +83,12 @@ public abstract class AbstractView extends VerticalLayout {
                 var detail = ((CustomUserDetails) details).getAuthorities();
                 if (detail.contains(ADMIN_ROLE) || detail.contains(CUSTOMER_ROLE) ){
                    cartButton.setVisible(true);
+                }
+            }
+            if (details instanceof CustomUserDetails){
+                var detail = ((CustomUserDetails) details).getAuthorities();
+                if (detail.contains(CUSTOMER_ROLE)  ){
+                    orderButton.setVisible(true);
                 }
             }
             return buttos;

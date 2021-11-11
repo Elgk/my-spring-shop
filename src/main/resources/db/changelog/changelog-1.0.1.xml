@@ -14,4 +14,16 @@
     <changeSet id="modify-datatype-for_price" author="kuznee">
         <modifyDataType tableName="product" columnName="price" newDataType="numeric(10,2)"/>
     </changeSet>
+
+    <changeSet id="add-order-id-to-cart" author="kuznee">
+        <addColumn tableName="cart">
+            <column name="order_id" type="int">
+                <constraints foreignKeyName="order_id" references="order(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="rename-order-table" author="kuznee">
+        <renameTable oldTableName="order" newTableName="person_order"/>
+    </changeSet>
 </databaseChangeLog>

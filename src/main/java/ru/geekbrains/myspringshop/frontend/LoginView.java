@@ -45,7 +45,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
        // loginForm.setAction("login");
         loginByJwtListener();
         var registrationButton = new Button("Регистрация", event ->
-            UI.getCurrent().navigate(RegistrationView.class);
+            UI.getCurrent().navigate(RegistrationView.class)
         );
         add(new H1("Vaadin Shop"), registrationButton, loginForm);
     }

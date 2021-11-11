@@ -19,12 +19,14 @@ import ru.geekbrains.myspringshop.entity.Product;
 import ru.geekbrains.myspringshop.entity.filter.ProductFilter;
 import ru.geekbrains.myspringshop.service.CartService;
 import ru.geekbrains.myspringshop.service.ProductService;
+import ru.geekbrains.myspringshop.util.PersonUtil;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Route("main")
 public class MainView extends AbstractView {
@@ -114,19 +116,27 @@ public class MainView extends AbstractView {
 
     private HorizontalLayout initCartButton(){
         var addToCartButton = new Button("Добавить в корзину", event -> {
-            var cart = new Cart();
-            List<Cart.InnerProduct> products = new ArrayList<>();
-            Set<Product> gridSelectedItems = productGrid.getSelectedItems();
-            for (Product product : gridSelectedItems) {
-                Cart.InnerProduct innerProduct = new Cart.InnerProduct();
-                innerProduct.setName(product.getName());
-                innerProduct.setCount(product.getCount());
-                innerProduct.setPrice(product.getPrice());
-                innerProduct.setVendorCode(product.getVendorCode());
-                products.add(innerProduct);
+            var innerProducts = productGrid.getSelectedItems()
+                    .stream()
+                    .map(it -> new Cart.InnerProduct()
+                                .setId(it.getId().toString())
+                                .setName(it.getName())
+                                .setPrice(it.getPrice())
+                                .setCount(1)
+                                .setVendorCode(it.getVendorCode())
+                        )
+                    .collect(Collectors.toList());
+             Cart cart;
+            var optinalCart = cartService.findLastCart(PersonUtil.getCurrentPerson());
+            if (optinalCart.isPresent()){
+                cart = optinalCart.get();
+                cart.setProducts(innerProducts);
+            }else {
+                cart = new Cart();
+                cart.setProducts(innerProducts);
+                cart.setPerson(PersonUtil.getCurrentPerson());
             }
-            cart.setProducts(products);
-            cart.setPerson(cartService.findPerson());
+
             cartService.save(cart);
             Notification.show("Товар успешно добавлен в корзину");
         });

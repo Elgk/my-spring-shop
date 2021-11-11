@@ -26,6 +26,17 @@ public class Cart {
     @Type(type = "jsonb")
     private List<InnerProduct> products;
 
+    @OneToOne
+    private Order order;
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
     @PrePersist
     public void init() {
         if(this.id == null) {
