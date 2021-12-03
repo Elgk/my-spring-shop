@@ -26,7 +26,7 @@ public class CartView extends  AbstractView{
     private final Grid<Cart.InnerProduct> cartGrid = new Grid<>(Cart.InnerProduct.class);
     private final Cart cart;
     private final CartService cartService;
-    private  final OrderService orderService;
+    private final OrderService orderService;
 
     public CartView( CartService cartService,
                      OrderService orderService) {

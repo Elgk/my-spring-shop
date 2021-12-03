@@ -21,10 +21,10 @@ public abstract class AbstractView extends VerticalLayout {
     private final Button cartButton;
     private final Button orderButton;
 
-    private static final SimpleGrantedAuthority ADMIN_ROLE = new SimpleGrantedAuthority("admin");
-    private static final SimpleGrantedAuthority MANAGER_ROLE = new SimpleGrantedAuthority("seller");
-    private static final SimpleGrantedAuthority SELLER_ROLE = new SimpleGrantedAuthority("manager");
-    private static final SimpleGrantedAuthority CUSTOMER_ROLE = new SimpleGrantedAuthority("customer");
+    protected static final SimpleGrantedAuthority ADMIN_ROLE = new SimpleGrantedAuthority("admin");
+    protected static final SimpleGrantedAuthority MANAGER_ROLE = new SimpleGrantedAuthority("manager");
+    protected static final SimpleGrantedAuthority SELLER_ROLE = new SimpleGrantedAuthority("seller");
+    protected static final SimpleGrantedAuthority CUSTOMER_ROLE = new SimpleGrantedAuthority("customer");
 
     public AbstractView(){
        logoutButton = new Button("Exit", e -> {
@@ -78,6 +78,16 @@ public abstract class AbstractView extends VerticalLayout {
                     ));
                 }
             }
+
+            if (details instanceof CustomUserDetails){
+                var detail = ((CustomUserDetails) details).getAuthorities();
+                if (detail.contains(ADMIN_ROLE) || detail.contains(MANAGER_ROLE)){
+                    buttos.add(new Button("Reviews for checking", e ->
+                            UI.getCurrent().navigate("reviews")
+                    ));
+                }
+            }
+
             // данный метод не вписывается по стилю, но внесен для демострации другого подхода
             if (details instanceof CustomUserDetails){
                 var detail = ((CustomUserDetails) details).getAuthorities();

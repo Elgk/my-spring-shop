@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+        <changeSet id="add new table review" author="kuznee">
+            <createTable tableName="review">
+                <column name="id" type="int" autoIncrement="true">
+                    <constraints primaryKey="true"/>
+                </column>
+                <column name="product_id" type="uuid">
+                    <constraints nullable="false" foreignKeyName="product_id" references="product(id)"/>
+                </column>
+                <column name="content" type="varchar(1024)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="person_id" type="uuid">
+                    <constraints nullable="false" foreignKeyName="person_id" references="person(id)"/>
+                </column>
+                <column name="is_moderated" type="boolean" defaultValue="false">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="created_at" type="timestamp without timezone">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+        </changeSet>
+
+</databaseChangeLog>

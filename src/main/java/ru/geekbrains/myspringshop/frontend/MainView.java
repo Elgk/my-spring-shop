@@ -22,10 +22,7 @@ import ru.geekbrains.myspringshop.service.ProductService;
 import ru.geekbrains.myspringshop.util.PersonUtil;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Route("main")
@@ -109,7 +106,17 @@ public class MainView extends AbstractView {
                 productGrid.getDataProvider().refreshItem(item);
 
             });
-            return new HorizontalLayout(plusButton, minusButton);
+
+            var reviewsButton = new Button("reviews", i ->{
+                var productId = item.getId().toString();
+                UI.getCurrent().navigate("reviews/"+ productId);
+            });
+
+            var addReviewButton = new Button("add review", i ->{
+                var productId = item.getId().toString();
+                UI.getCurrent().navigate("add-review/"+ productId);
+            });
+            return new HorizontalLayout(plusButton, minusButton, reviewsButton, addReviewButton);
         }));
 
     }
@@ -126,10 +133,10 @@ public class MainView extends AbstractView {
                                 .setVendorCode(it.getVendorCode())
                         )
                     .collect(Collectors.toList());
-             Cart cart;
-            var optinalCart = cartService.findLastCart(PersonUtil.getCurrentPerson());
-            if (optinalCart.isPresent()){
-                cart = optinalCart.get();
+            Cart cart;
+            var optionalCart = cartService.findLastCart(PersonUtil.getCurrentPerson());
+            if (optionalCart.isPresent()){
+                cart = optionalCart.get();
                 cart.setProducts(innerProducts);
             }else {
                 cart = new Cart();
@@ -140,10 +147,6 @@ public class MainView extends AbstractView {
             cartService.save(cart);
             Notification.show("Товар успешно добавлен в корзину");
         });
-
-//        var toCartViewButton = new Button("Корзина", event -> {
-//            UI.getCurrent().navigate("cart");
-//        });
         return new HorizontalLayout(addToCartButton);
     }
 }
